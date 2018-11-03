@@ -22,20 +22,20 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
-import main.Main;
+import main.MainForm;
 import message.Message;
 import model.Friend;
-import my_swing.ImageViewer;
+import swing.ImageViewer;
 
 public class Method {
 
-    public static Recoder getRecoder() {
-        return recoder;
-    }
-
-    public static void setRecoder(Recoder aRecoder) {
-        recoder = aRecoder;
-    }
+//    public static Recoder getRecoder() {
+//        return recoder;
+//    }
+//
+//    public static void setRecoder(Recoder aRecoder) {
+//        recoder = aRecoder;
+//    }
 
     private static HashMap<Integer, Friend> friends = new HashMap<>();
     private static Socket client;
@@ -45,7 +45,7 @@ public class Method {
     private static String myName;
     private static String time;
     private static JFrame fram;
-    private static Recoder recoder = new Recoder();
+//    private static Recoder recoder = new Recoder();
 
     public static void setTextFieldSyle(JTextField txt, String style) {
         txt.setName("");
@@ -84,7 +84,7 @@ public class Method {
     }
 
     public static void connect(ImageIcon icon, String userName, String IP) throws Exception {
-        client = new Socket(IP, 5000);
+        client = new Socket(IP, 9999);
         out = new ObjectOutputStream(client.getOutputStream());
         in = new ObjectInputStream(client.getInputStream());
         SimpleDateFormat df = new SimpleDateFormat("hh:mm aa");
@@ -132,14 +132,14 @@ public class Method {
         out.flush();
     }
 
-    public static void sendEmoji(String emoji) throws Exception {
-        Message ms = new Message();
-        ms.setStatus("Emoji");
-        ms.setID(Method.getMyID());
-        ms.setMessage(emoji);
-        out.writeObject(ms);
-        out.flush();
-    }
+//    public static void sendEmoji(String emoji) throws Exception {
+//        Message ms = new Message();
+//        ms.setStatus("Emoji");
+//        ms.setID(Method.getMyID());
+//        ms.setMessage(emoji);
+//        out.writeObject(ms);
+//        out.flush();
+//    }
 
     private static String getDurationString(int seconds) {
         int minutes = (seconds % 3600) / 60;
@@ -167,15 +167,15 @@ public class Method {
         return String.valueOf(number);
     }
 
-    public static void sendSound(ByteArrayOutputStream sount, int time) throws Exception {
-        Message ms = new Message();
-        ms.setStatus("Sound");
-        ms.setID(Method.getMyID());
-        ms.setMessage(getDurationString(time) + "!" + time);
-        ms.setData(sount.toByteArray());
-        out.writeObject(ms);
-        out.flush();
-    }
+//    public static void sendSound(ByteArrayOutputStream sount, int time) throws Exception {
+//        Message ms = new Message();
+//        ms.setStatus("Sound");
+//        ms.setID(Method.getMyID());
+//        ms.setMessage(getDurationString(time) + "!" + time);
+//        ms.setData(sount.toByteArray());
+//        out.writeObject(ms);
+//        out.flush();
+//    }
 
     public static void downloadFile(int ID, String name) {
         try {
@@ -183,11 +183,11 @@ public class Method {
             String x = ex[ex.length - 1];
             JFileChooser ch = new JFileChooser();
             ch.setSelectedFile(new File(name));
-            int c = ch.showSaveDialog(Main.getFrames()[0]);
+            int c = ch.showSaveDialog(MainForm.getFrames()[0]);
             if (c == JFileChooser.APPROVE_OPTION) {
                 File f = ch.getSelectedFile();
                 if (f.exists()) {
-                    int click = JOptionPane.showConfirmDialog(Main.getFrames()[0], "This file name has already do you want to replace", "Save File", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int click = JOptionPane.showConfirmDialog(MainForm.getFrames()[0], "This file name has already do you want to replace", "Save File", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (click != JOptionPane.YES_OPTION) {
                         return;
                     }
