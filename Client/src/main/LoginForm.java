@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.ConnectException;
-import java.net.UnknownHostException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import javax.swing.ImageIcon;
@@ -24,7 +23,6 @@ public class LoginForm extends javax.swing.JFrame {
     }
 
     private void open() {
-        setIconImage(new ImageIcon(getClass().getResource("/icon/icon.png")).getImage());
         Method.setTextFieldSyle(txtUser, "User Name");
         Method.setTextFieldSyle(txtIP, "IP Address");
         showStatus(ms);
@@ -175,14 +173,13 @@ public class LoginForm extends javax.swing.JFrame {
                 txtUser.grabFocus();
                 showStatus("Please input your user name");
             } else {
-                if (txtUser.getText().trim().length() > 15) {
+                if (txtUser.getText().trim().length() > 20) {
                     txtUser.grabFocus();
-                    showStatus("User name must less than 15 character");
+                    showStatus("User name must less than 20 character");
                 } else {
                     String IP = txtIP.getText().trim();
                     if (txtIP.getText().equals("") || !txtIP.getName().equals("have")) {
                         IP = "localhost";
-                        System.err.println("have");
                     }
                     String userName = txtUser.getText().trim();
                     Registry re = LocateRegistry.getRegistry(IP, 5000);
@@ -197,8 +194,6 @@ public class LoginForm extends javax.swing.JFrame {
                 }
 
             }
-        } catch (UnknownHostException e) {
-            showStatus("Unknown host : " + txtIP.getText());
         } catch (java.rmi.UnknownHostException e) {
             showStatus("Unknown host : " + txtIP.getText());
         } catch (ConnectException e) {
@@ -240,7 +235,6 @@ public class LoginForm extends javax.swing.JFrame {
                     img = image.getImage().getScaledInstance(-1, 100, Image.SCALE_SMOOTH);
                 }
                 profile_pic = new ImageIcon(img);
-//                profile.setIcon(profile_pic);
             }
         }
     }//GEN-LAST:event_borderMouseClicked
@@ -261,21 +255,19 @@ public class LoginForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIPKeyTyped
 
     private ImageIcon profile_pic;
+    
     private Timer timer = new Timer(5000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent ae) {
-            lbStatus.setText("");
             timer.stop();
         }
     });
 
     private void showStatus(String error) {
         if (timer.isRunning()) {
-            lbStatus.setText("");
             timer.stop();
         }
         timer.start();
-        lbStatus.setText(error);
     }
 
     private static String ms = "";

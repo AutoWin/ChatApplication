@@ -35,10 +35,11 @@ public class Send_Box extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(600, 45));
 
         txt.setEditable(false);
-        txt.setFont(new java.awt.Font("Khmer SBBIC Serif", 0, 13)); // NOI18N
+        txt.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 13)); // NOI18N
+        txt.setForeground(new java.awt.Color(0, 0, 51));
         txt.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         txt.setText("your message here");
-        txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
+        txt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txt.setSelectionColor(new java.awt.Color(131, 188, 227));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -54,7 +55,7 @@ public class Send_Box extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txt, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                .addComponent(txt)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

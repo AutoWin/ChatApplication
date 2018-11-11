@@ -1,0 +1,9 @@
+2018-11-08 13:30:54 Username:1 Content: a
+2018-11-08 13:30:54 Username:1 Content: s
+2018-11-08 13:33:02 Username:1 Content: a
+2018-11-08 13:33:02 Username:1 Content: sd
+2018-11-08 13:33:03 Username:1 Content: d
+2018-11-08 13:33:03 Username:1 Content: dd
+2018-11-08 13:33:03 Username:1 Content: ff
+2018-11-08 13:33:04 Username:1 Content: f
+2018-11-08 13:34:18 Username:1 Content: C:\Users\luong\OneDrive\Documents\brazil_bus_wpo.jpg

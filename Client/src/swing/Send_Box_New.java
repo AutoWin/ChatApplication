@@ -42,10 +42,11 @@ public class Send_Box_New extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(600, 72));
 
         txt.setEditable(false);
-        txt.setFont(new java.awt.Font("Khmer SBBIC Serif", 0, 13)); // NOI18N
+        txt.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 13)); // NOI18N
+        txt.setForeground(new java.awt.Color(0, 0, 51));
         txt.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         txt.setText("Your message here ..");
-        txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
+        txt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txt.setMaximumSize(new java.awt.Dimension(510, 33));
         txt.setMinimumSize(new java.awt.Dimension(510, 33));
         txt.setSelectionColor(new java.awt.Color(131, 188, 227));
@@ -53,7 +54,7 @@ public class Send_Box_New extends javax.swing.JPanel {
         jLayeredPane1.setLayout(new javax.swing.OverlayLayout(jLayeredPane1));
 
         border.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        border.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/border_small.png"))); // NOI18N
+        border.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/users.png"))); // NOI18N
         jLayeredPane1.add(border);
 
         profile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

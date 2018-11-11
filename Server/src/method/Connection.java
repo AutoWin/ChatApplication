@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import javax.swing.JTextArea;
 
 public class Connection {
+    
+    private static int clientID;
+    private static int fileID;
+    private static ArrayList<Client> clients;
+    private static JTextArea txt;
 
     public static int getFileID() {
         return fileID;
@@ -43,9 +48,6 @@ public class Connection {
         clients.add(client);
         return clientID++;
     }
-    private static int clientID;
-    private static int fileID;
-    private static ArrayList<Client> clients;
-    private static JTextArea txt;
+    
 
 }

@@ -58,37 +58,6 @@ public class MainForm extends javax.swing.JFrame {
         for (int i = 0; i < 10; i++) {
             cmdSendActionPerformed(null);
         }
-//        Emoji_Group eg1 = new Emoji_Group("emoji_green.png", 28);
-//        eg1.setName("emoji_green");
-//        eg1.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent ae) {
-////                setEmoji(eg1);
-//            }
-//        });
-//        panelGroup.sadd(eg1);
-//        Emoji_Group eg2 = new Emoji_Group("emoji_yellow.png", 28);
-//        eg2.setName("emoji_yellow");
-//        eg2.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent ae) {
-//                panelEmoji.removeAll();
-//                for (int i = 1; i <= eg2.getIcons(); i++) {
-//                    Emoji emo = new Emoji(eg2.getName() + " (" + i + ").png");
-//                    emo.addActionListener(new ActionListener() {
-//                        @Override
-//                        public void actionPerformed(ActionEvent ae) {
-////                            setEmoji(emo.getName());
-//                        }
-//                    });
-//                    panelEmoji.add(emo);
-//                }
-//                panelEmoji.revalidate();
-//                panelEmoji.repaint();
-//            }
-//        });
-//        panelGroup.add(eg2);
-//        setEmoji(eg1);
     }
 
     @SuppressWarnings("unchecked")
@@ -495,21 +464,6 @@ public class MainForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-//    private void setEmoji(Emoji_Group eg1) {
-//        panelEmoji.removeAll();
-//        for (int i = 1; i <= eg1.getIcons(); i++) {
-//            Emoji emo = new Emoji(eg1.getName() + " (" + i + ").png");
-//            emo.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent ae) {
-//                    setEmoji(emo.getName());
-//                }
-//            });
-//            panelEmoji.add(emo);
-//        }
-//        panelEmoji.revalidate();
-//        panelEmoji.repaint();
-//    }
     private void cmdSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSendActionPerformed
         if (txt.getName().equals("have") && !txt.getText().equals("")) {
             try {
@@ -536,8 +490,9 @@ public class MainForm extends javax.swing.JFrame {
             public void run() {
                 try {
                     while (true) {
-                        System.out.println("waiting message ...");
+                        System.out.println("receiving message ...");
                         Message ms = (Message) Method.getIn().readObject();
+//                        System.out.println(Method.getFriends().getClass());
                         String status = ms.getStatus();
                         if (status.equals("Message")) {
                             getMessage(ms.getID(), ms.getMessage());

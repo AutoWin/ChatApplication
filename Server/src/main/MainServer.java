@@ -126,7 +126,7 @@ public class MainServer extends javax.swing.JFrame {
     private void stopServer() throws Exception {
         int c = JOptionPane.showConfirmDialog(this, "Do you want to stop server", "Stop Server", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (c == JOptionPane.YES_OPTION) {
-            lbStatus.setForeground(new Color(255, 51, 51));
+//            lbStatus.setForeground(new Color(255, 51, 51));
             txt.setText("Server stopped...");
             run.interrupt();
             server.close();

@@ -6,9 +6,9 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -16,6 +16,9 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TimeZone;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -29,14 +32,6 @@ import swing.ImageViewer;
 
 public class Method {
 
-//    public static Recoder getRecoder() {
-//        return recoder;
-//    }
-//
-//    public static void setRecoder(Recoder aRecoder) {
-//        recoder = aRecoder;
-//    }
-
     private static HashMap<Integer, Friend> friends = new HashMap<>();
     private static Socket client;
     private static ObjectOutputStream out;
@@ -45,7 +40,26 @@ public class Method {
     private static String myName;
     private static String time;
     private static JFrame fram;
-//    private static Recoder recoder = new Recoder();
+    public static FileWriter fileWriter;
+    public static String directory = "C:\\Users\\luong\\OneDrive\\Máy tính\\Chat java\\";
+    public static Set<String> setName = new HashSet<String>();
+    
+    public static void connect(ImageIcon icon, String userName, String IP) throws Exception {
+        client = new Socket(IP, 9999);
+        out = new ObjectOutputStream(client.getOutputStream());
+        in = new ObjectInputStream(client.getInputStream());
+        SimpleDateFormat df = new SimpleDateFormat("hh:mm aa");
+        String t = df.format(new Date());
+        Message ms = new Message();
+        ms.setStatus("New");
+        ms.setImage(icon);
+        ms.setName(userName + "!" + t);
+        setName.add(userName);
+        out.writeObject(ms);
+        out.flush();
+        myName = userName;
+        time = t;
+    }
 
     public static void setTextFieldSyle(JTextField txt, String style) {
         txt.setName("");
@@ -83,29 +97,43 @@ public class Method {
         });
     }
 
-    public static void connect(ImageIcon icon, String userName, String IP) throws Exception {
-        client = new Socket(IP, 9999);
-        out = new ObjectOutputStream(client.getOutputStream());
-        in = new ObjectInputStream(client.getInputStream());
-        SimpleDateFormat df = new SimpleDateFormat("hh:mm aa");
-        String t = df.format(new Date());
-        Message ms = new Message();
-        ms.setStatus("New");
-        ms.setImage(icon);
-        ms.setName(userName + "!" + t);
-        out.writeObject(ms);
-        out.flush();
-        myName = userName;
-        time = t;
-    }
-
     public static void sendMessage(String text) throws Exception {
         Message ms = new Message();
         ms.setStatus("Message");
         ms.setID(Method.getMyID());
+        ms.setName(Method.getMyName());
         ms.setMessage(text);
+//        setFileWriter(new FileWriter("C:\\Users\\luong\\OneDrive\\Máy tính\\Chat java\\log.txt", true));
+//        FileWriter fileW = getFileWriter();
+//        fileW.write(getUTCDatetime() + " ID:" + ms.getID() + " Name:" + ms.getName() + " Message:" + ms.getMessage() + "\n");
+//        fileW.close();
+        writeLog(ms.getName(), ms.getMessage());
         out.writeObject(ms);
         out.flush();
+    }
+
+    public static String getUTCDatetime() {
+        String dateFormat = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String utcTime = sdf.format(new Date());
+        System.out.println(utcTime);
+        return utcTime;
+    }
+
+    public static void writeLog(String user, String msg) {
+        try {
+            for(String s : setName){
+                if(s.equals(user)){
+                    setFileWriter(new FileWriter("C:\\Users\\luong\\OneDrive\\Máy tính\\Chat java\\"+user+".txt", true));
+                    FileWriter fileW = getFileWriter();
+                    fileW.write(getUTCDatetime()+ " Username:" + user + " Content: " + msg + "\n");
+                    fileW.close();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void sendPhoto(ImageIcon photo) throws Exception {
@@ -113,6 +141,12 @@ public class Method {
         ms.setStatus("Photo");
         ms.setID(Method.getMyID());
         ms.setImage(photo);
+        ms.setName(Method.getMyName());
+//        setFileWriter(new FileWriter("C:\\Users\\luong\\OneDrive\\Máy tính\\Chat java\\log.txt", true));
+//        FileWriter fileW = getFileWriter();
+//        fileW.write(getUTCDatetime() + " ID:" + ms.getID() + " Photo:" + ms.getImage().getDescription() + " Photo:" + "\n");
+//        fileW.close();
+        writeLog(ms.getName(), ms.getImage().getDescription());
         out.writeObject(ms);
         out.flush();
     }
@@ -126,20 +160,18 @@ public class Method {
         Message ms = new Message();
         ms.setStatus("File");
         ms.setID(Method.getMyID());
+//        ms.setName(Method.getMyName());
         ms.setData(data);
         ms.setName(file.getName() + "!" + fileSize);
+//        setFileWriter(new FileWriter("C:\\Users\\luong\\OneDrive\\Máy tính\\Chat java\\log.txt", true));
+//        FileWriter fileW = getFileWriter();
+//        fileW.write(getUTCDatetime() + " ID:" + ms.getID() + " File:" + file.getAbsolutePath() + "\n");
+//        fileW.close();
+//        System.out.println(ms.getName().split("!")[0]);
+        writeLog(Method.getMyName(), file.getAbsolutePath());
         out.writeObject(ms);
         out.flush();
     }
-
-//    public static void sendEmoji(String emoji) throws Exception {
-//        Message ms = new Message();
-//        ms.setStatus("Emoji");
-//        ms.setID(Method.getMyID());
-//        ms.setMessage(emoji);
-//        out.writeObject(ms);
-//        out.flush();
-//    }
 
     private static String getDurationString(int seconds) {
         int minutes = (seconds % 3600) / 60;
@@ -166,16 +198,6 @@ public class Method {
         }
         return String.valueOf(number);
     }
-
-//    public static void sendSound(ByteArrayOutputStream sount, int time) throws Exception {
-//        Message ms = new Message();
-//        ms.setStatus("Sound");
-//        ms.setID(Method.getMyID());
-//        ms.setMessage(getDurationString(time) + "!" + time);
-//        ms.setData(sount.toByteArray());
-//        out.writeObject(ms);
-//        out.flush();
-//    }
 
     public static void downloadFile(int ID, String name) {
         try {
@@ -219,6 +241,7 @@ public class Method {
         int h = (int) obj.getPreferredSize().getHeight();
         pop.show(fram, fram.getWidth() / 2 - w / 2, fram.getHeight() / 2 - h / 2);
     }
+
     private static final String[] fileSizeUnits = {"bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
 
     private static String convertSize(double bytes) {
@@ -237,11 +260,11 @@ public class Method {
     }
 
     public static Font getFount() {
-        return new java.awt.Font("Khmer SBBIC Serif", 0, 12);
+        return new java.awt.Font("Serif", 0, 12);
     }
 
     public static Font getFountBold() {
-        return new java.awt.Font("Khmer SBBIC Serif", 1, 12);
+        return new java.awt.Font("Serif", 1, 12);
     }
 
     public static HashMap<Integer, Friend> getFriends() {
@@ -307,4 +330,13 @@ public class Method {
     public static void setFram(JFrame aFram) {
         fram = aFram;
     }
+
+    public static FileWriter getFileWriter() {
+        return fileWriter;
+    }
+
+    public static void setFileWriter(FileWriter fileWriter) {
+        Method.fileWriter = fileWriter;
+    }
+
 }

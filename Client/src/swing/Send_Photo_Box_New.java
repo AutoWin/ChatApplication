@@ -73,6 +73,7 @@ public class Send_Photo_Box_New extends javax.swing.JPanel {
         jLayeredPane1.add(profile);
 
         lb.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lb.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         lb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lb.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {

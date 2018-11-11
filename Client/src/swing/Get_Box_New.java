@@ -44,7 +44,7 @@ public class Get_Box_New extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(600, 72));
 
         txt.setEditable(false);
-        txt.setFont(new java.awt.Font("Khmer SBBIC Serif", 0, 13)); // NOI18N
+        txt.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         txt.setText("your message here");
         txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         txt.setMaximumSize(new java.awt.Dimension(510, 33));
